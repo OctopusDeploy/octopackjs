@@ -1,0 +1,18 @@
+{
+  "latedef":    "nofunc",
+  "quotmark":   "single",
+  "indent":     2,
+  "camelcase":  true,
+  "eqeqeq":     true,
+  "curly":      true,
+  "unused":     true,
+  "strict":     true,
+  "trailing":   true,
+  "eqnull":     true,
+  "undef":      true,
+  "noarg":      true,
+  "node":       true,
+  "expr":       true,
+  "browser":    false,
+  "mocha":      true
+}

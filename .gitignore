@@ -1,0 +1,12 @@
+# npm
+node_modules
+npm-debug.log
+
+# Build artifacts
+bin
+
+# OS generated files
+.idea
+.DS_Store
+Thumbs.db
+
