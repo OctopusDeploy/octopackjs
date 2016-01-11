@@ -3,10 +3,10 @@ octopack
 > A nodejs tool for packaging and pushing projects to an Octopus Deploy instance.
 
 ## Installation
-Install with [npm](https://npmjs.org/package/gulp-octo)
+Install with [npm](https://www.npmjs.com/package/@octopusdeploy/octopackjs)
 
 ```shell
-    npm install @octopus/octo-pack --save-dev
+    npm install @octopusdeploy/octopackjs --save-dev
 ```
 
 ## API
@@ -65,19 +65,19 @@ Invoked when the HTTP request has completed. The `data` object contains the HTTP
 
 #### Pack
 ```js
-var octo = require('octo');
+var octo = require('@octopusdeploy/octopackjs');
 octo.pack()
   .append('buffer files/hello.txt', new Buffer('hello world'), {date: new Date(2011, 11, 11)})
   .append('stream.txt', fs.createReadStream('./package.json'))
   .append('lib/myfile.js')
-  .toFile('./bin', function (filePath, data) {
+  .toFile('./bin', function (err, data) {
     console.log("Package Saved: "+ data.name);
   });
 ``` 
 
 #### Push
 ```js
-var octo = require('octo');
+var octo = require('@octopusdeploy/octopackjs');
 
 octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
         host: 'http://octopus-server/', 
