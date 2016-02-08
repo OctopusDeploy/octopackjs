@@ -32,66 +32,29 @@ describe('push', function() {
 
   describe('build url', function () {
     it('should include `replace` parameter if it is provided', function () {
-      var req;
-
-      // it should work with a trailing slash
       octo.push(new Buffer('hello world'), { replace: true, host: 'http://myweb/' });
-      req = postStub.firstCall.args[0];
-      expect(req.url).to.equal('http://myweb/api/packages/raw?replace=true');
-
-      postStub.reset();
-
-      // it should work without a trailing slash
-      octo.push(new Buffer('hello world'), { replace: true, host: 'http://myweb' });
-      req = postStub.firstCall.args[0];
+      var req = postStub.lastCall.args[0];
       expect(req.url).to.equal('http://myweb/api/packages/raw?replace=true');
     });
 
-    it('should build correct url', function () {
-      var req;
-
-      // it should work with a trailing slash
-      octo.push(new Buffer('hello world'), { host: 'http://myweb' });
-      req = postStub.firstCall.args[0];
-      expect(req.url).to.equal('http://myweb/api/packages/raw');
-
-      // it should work without a trailing slash
-      octo.push(new Buffer('hello world'), { host: 'http://myweb/' });
-      req = postStub.firstCall.args[0];
-      expect(req.url).to.equal('http://myweb/api/packages/raw');
+    it('should build correct url regardless of trailing slash', function () {
+      testUrl('http://myweb', 'http://myweb/api/packages/raw');
+      testUrl('http://myweb/', 'http://myweb/api/packages/raw');
     });
 
     it('should build correct url with port', function () {
-      var req;
-
-      // it should work with a trailing slash
-      octo.push(new Buffer('hello world'), { host: 'http://myweb:3000/' });
-      req = postStub.firstCall.args[0];
-      expect(req.url).to.equal('http://myweb:3000/api/packages/raw');
-
-      postStub.reset();
-
-      // it should work without a trailing slash
-      octo.push(new Buffer('hello world'), { host: 'http://myweb:3000' });
-      req = postStub.firstCall.args[0];
-      expect(req.url).to.equal('http://myweb:3000/api/packages/raw');
+      testUrl('http://myweb:3000/', 'http://myweb:3000/api/packages/raw')
     });
 
     it('should build correct url with relative path', function () {
-      var req;
-
-      // it should should work with a trailing slash
-      octo.push(new Buffer('hello world'), { host: 'http://myweb/path/to/octopus/' });
-      req = postStub.firstCall.args[0];
-      expect(req.url).to.equal('http://myweb/path/to/octopus/api/packages/raw');
-
-      postStub.reset();
-
-      // it should should work without a trailing slash
-      octo.push(new Buffer('hello world'), { host: 'http://myweb/path/to/octopus' });
-      req = postStub.firstCall.args[0];
-      expect(req.url).to.equal('http://myweb/path/to/octopus/api/packages/raw');
+      testUrl('http://myweb/path/to/octopus', 'http://myweb/path/to/octopus/api/packages/raw');
     });
+
+    function testUrl(host, expected) {
+      octo.push(new Buffer('hello world'), { host: host });
+      var req = postStub.lastCall.args[0];
+      expect(req.url).to.equal(expected);
+    }
   });
 
   it('should return response body if request successful', function(done) {
