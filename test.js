@@ -41,7 +41,7 @@ describe('push', function() {
     expect(req.url).to.equal('http://myweb/api/packages/raw');
   });
 
-  it('should return resoponse body if request successful', function(done) {
+  it('should return response body if request successful', function(done) {
     var body = { prop: 12 };
 
     octo.push(new Buffer('hello world'), {
