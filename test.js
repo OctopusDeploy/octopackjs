@@ -52,7 +52,7 @@ describe('push', function() {
       expect(req.url).to.equal('http://myweb:3000/api/packages/raw');
     });
 
-    it('should build correct url with relative', function () {
+    it('should build correct url with relative path', function () {
       octo.push(new Buffer('hello world'), { host: 'http://myweb/path/to/octopus/' });
       req = postStub.firstCall.args[0];
       expect(req.url).to.equal('http://myweb/path/to/octopus/api/packages/raw');
