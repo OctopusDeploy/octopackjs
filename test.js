@@ -90,16 +90,7 @@ describe('pack', function() {
       });
   });
 
-  it('can create nupkg', function (done) {
-    octo.pack('nupkg')
-      .append('buffer files/hello.txt', new Buffer('hello world'), {date: new Date(2011, 11, 11)})
-      .append('stream.txt', fs.createReadStream('./package.json'))
-      .append('lib/pack.js')
-      .toFile('./bin', function (err, data) {
-        expect(err).to.be.null;
-        expect(data.path).not.to.be.null;
-        expect(data.name).not.to.be.null;
-        done();
-      });
+  it('can\'t create nupkg', function () {
+    expect(function(){ octo.pack('nupkg'); }).to.throw('Currently unable to support .nupkg file. Please use .tar.gz or .zip')
   });
 });
