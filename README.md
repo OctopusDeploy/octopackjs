@@ -14,7 +14,7 @@ Install with [npm](https://www.npmjs.com/package/@octopusdeploy/octopackjs)
 ### var package = octo.pack(type, options)
 
 #### type
-Optional parameter to define the package type. Valid values are `targz`, `tar`, `zip` or `nupkg`. If not provided this defaults to `targz`.
+Optional parameter to define the package type. Valid values are `targz`, `tar` or `zip`. If not provided this defaults to `targz`.
 
 #### options.packagejson
 Path to the `package.json` containing project information used to provide required package metadata.
