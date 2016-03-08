@@ -81,7 +81,7 @@ var octo = require('@octopusdeploy/octopackjs');
 
 octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
         host: 'http://octopus-server/', 
-        apiKey: 'API-XXXXXXXXX',
+        apikey: 'API-XXXXXXXXX',
         replace: true
     }, function(err, result) {
      if(!err) {
