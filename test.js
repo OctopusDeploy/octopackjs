@@ -43,7 +43,7 @@ describe('push', function() {
     });
 
     it('should build correct url with port', function () {
-      testUrl('http://myweb:3000/', 'http://myweb:3000/api/packages/raw')
+      testUrl('http://myweb:3000/', 'http://myweb:3000/api/packages/raw');
     });
 
     it('should build correct url with relative path', function () {
@@ -77,20 +77,69 @@ describe('push', function() {
 
 describe('pack', function() {
 
-  it('can create zip', function (done) {
+  it('can create a stream', function (done) {
     octo.pack()
-      .append('buffer files/hello.txt', new Buffer('hello world'), {date: new Date(2011, 11, 11)})
-      .append('stream.txt', fs.createReadStream('./package.json'))
-      .append('lib/pack.js')
-      .toStream(function (err, data) {
-        expect(err).to.be.null;
-        expect(data.stream.readable).to.be.true;
-        expect(data.name).not.to.be.null;
-        done();
-      });
+        .append('buffer files/hello.txt', new Buffer('hello world'), {date: new Date(2011, 11, 11)})
+        .append('stream.txt', fs.createReadStream('./package.json'))
+        .append('lib/pack.js')
+        .toStream(function (err, data) {
+          expect(err).to.be.null;
+          expect(data.stream.readable).to.be.true;
+          done();
+        });
+  });
+
+  it('can create a file', function (done) {
+    octo.pack()
+        .append('buffer files/hello.txt', new Buffer('hello world'), {date: new Date(2011, 11, 11)})
+        .append('stream.txt', fs.createReadStream('./package.json'))
+        .append('lib/pack.js')
+        .toFile('./bin/', function (err, data) {
+            expect(err).to.be.null;
+            expect(data.size).to.be.above(0);
+            expect(data.name).not.to.be.null;
+            console.log(data.path);
+            expect(data.path.indexOf('bin/')).to.not.equal(-1);
+
+            fs.exists(data.path, function (exists) {
+                expect(exists).to.be.true;
+                done();
+            });
+        });
+  });
+
+  it('defaults to tar.gz', function (done) {
+    octo.pack()
+        .append('file.txt', new Buffer('hello world'))
+        .toStream(function (err, data) {
+          expect(data.name).not.to.be.null;
+          expect(data.name.indexOf('.tar.gz', data.name.length - 7)).to.not.equal(-1);
+          done();
+        });
+  });
+
+  it('can create zip', function (done) {
+    octo.pack('zip')
+        .append('file.txt', new Buffer('hello world'))
+        .toStream(function (err, data) {
+          expect(data.name).not.to.be.null;
+          expect(data.name.indexOf('.zip', data.name.length - 4)).to.not.equal(-1);
+          done();
+        });
   });
 
   it('can\'t create nupkg', function () {
-    expect(function(){ octo.pack('nupkg'); }).to.throw('Currently unable to support .nupkg file. Please use .tar.gz or .zip')
+    expect(function(){ octo.pack('nupkg'); }).to
+        .throw('Currently unable to support .nupkg file. Please use .tar.gz or .zip');
+  });
+
+  it('can pass through custom id and version', function (done) {
+    octo.pack({id: 'MYAPP', version: '4.2'})
+        .append('file.txt', new Buffer('hello world'))
+        .toStream(function (err, data) {
+          expect(data.name).not.to.be.null;
+          expect(data.name.indexOf('MYAPP.4.2.')).to.equal(0);
+          done();
+        });
   });
 });
