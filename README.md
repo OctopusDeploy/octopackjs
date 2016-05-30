@@ -61,6 +61,25 @@ If a Stream or Buffer object is provided in the `file` parameter, the package na
 #### callback
 Invoked when the HTTP request has completed. The `data` object contains the HTTP response body that was returned as a result of a successful push.
 
+### octo.deploy(options, function callback(err, data))
+
+#### options.apiKey
+Key linked to account in `Project Deployer` role.
+
+#### options.host
+Required. The URL of the Octopus Server instance the release should be deployed on.
+
+#### options.projectName
+Required. The project name.
+
+#### options.deployTo
+Required. The name of the environment to deploy to.
+
+#### options.releaseVersion
+Required. The version of the release to be deployed.
+
+
+
 ## Usage Examples
 
 #### Pack
@@ -86,6 +105,23 @@ octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
     }, function(err, result) {
      if(!err) {
         console.log("Package Pushed:" + body.Title + " v"+ body.Version +" (" + fileSizeString(body.PackageSizeBytes) +"nytes)"); 
+     }
+});
+```
+
+#### Push
+```js
+var octo = require('@octopusdeploy/octopackjs');
+
+octo.deploy({
+        host: 'http://octopus-server/', 
+        apikey: 'API-XXXXXXXXX',
+        projectName: 'OctoPackJs',
+        releaseVersion: '1.2.4',
+        deployTo: 'Stage'
+    }, function(err, result) {
+     if(!err) {
+        console.log("Project released:" + body.Title + " v"+ body.Version); 
      }
 });
 ```

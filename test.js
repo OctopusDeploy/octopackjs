@@ -143,3 +143,24 @@ describe('pack', function() {
         });
   });
 });
+
+describe('deploy', function(){
+    
+    var postStub, getStub;
+
+    beforeEach(function(){
+        postStub = sinon.stub(request, 'post');
+        getStub = sinon.stub(request, 'get');
+    });
+
+    afterEach(function(){
+        postStub.restore();
+        getStub.restore();
+    });
+    
+    it('throws for non existing projectName', function(){
+        expect(function(){ octo.deploy({host:''}); }).to
+        .throw('Option "projectName" is undefined');
+    });
+    
+})
