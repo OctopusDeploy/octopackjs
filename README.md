@@ -72,7 +72,7 @@ Required. The URL of the Octopus Server instance the release should be deployed 
 #### options.projectName
 Required. The project name.
 
-#### options.deployTo
+#### options.environmentName
 Required. The name of the environment to deploy to.
 
 #### options.releaseVersion
@@ -118,7 +118,7 @@ octo.deploy({
         apikey: 'API-XXXXXXXXX',
         projectName: 'OctoPackJs',
         releaseVersion: '1.2.4', // or 'latest'
-        deployTo: 'Stage'
+        environmentName: 'Stage'
     }, function(err, result) {
      if(!err) {
         console.log("Project released:" + body.Title + " v"+ body.Version); 
