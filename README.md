@@ -121,7 +121,7 @@ octo.deploy({
         environmentName: 'Stage'
     }, function(err, result) {
      if(!err) {
-        console.log("Project released:" + body.Title + " v"+ body.Version); 
+        console.log("Deployment created! TaskId: " + result.TaskId + " QueueTime: "+ result.QueueTime); 
      }
 });
 ```
