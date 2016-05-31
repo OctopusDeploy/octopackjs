@@ -99,7 +99,7 @@ describe('pack', function() {
             expect(data.size).to.be.above(0);
             expect(data.name).not.to.be.null;
             console.log(data.path);
-            expect(data.path.indexOf('bin/')).to.not.equal(-1);
+            expect(/tar\.gz/.test(data.path)).to.be.true;
 
             fs.exists(data.path, function (exists) {
                 expect(exists).to.be.true;
