@@ -109,7 +109,7 @@ octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
 });
 ```
 
-#### Push
+#### Deploy
 ```js
 var octo = require('@octopusdeploy/octopackjs');
 
