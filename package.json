@@ -4,7 +4,7 @@
   "description": "A nodejs tool for packaging and pushing projects to an Octopus Deploy instance.",
   "main": "index.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha -R spec"
+    "test": "node node_modules/.bin/mocha -R spec"
   },
   "repository": {
     "type": "git",
