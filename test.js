@@ -32,7 +32,7 @@ describe('push', function() {
 
   describe('build url', function () {
     it('should include `replace` parameter if it is provided', function () {
-      octo.push(new Buffer('hello world'), { replace: true, host: 'http://myweb/' });
+      octo.push(new Buffer('hello world'), { replace: true, host: 'http://myweb/', name: 'package.tar' });
       var req = postStub.lastCall.args[0];
       expect(req.url).to.equal('http://myweb/api/packages/raw?replace=true');
     });
@@ -51,7 +51,7 @@ describe('push', function() {
     });
 
     function testUrl(host, expected) {
-      octo.push(new Buffer('hello world'), { host: host });
+      octo.push(new Buffer('hello world'), { host: host, name: 'package.tar' });
       var req = postStub.lastCall.args[0];
       expect(req.url).to.equal(expected);
     }
@@ -63,7 +63,8 @@ describe('push', function() {
     octo.push(new Buffer('hello world'), {
       apikey: 'KEY',
       replace: true,
-      host: 'http://localhost'
+      host: 'http://localhost',
+      name: 'package.tar',
     }, function(err, result) {
       expect(err).to.be.null;
       expect(result).to.eql(body);
