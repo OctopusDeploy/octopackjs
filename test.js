@@ -13,7 +13,7 @@ describe('push', function() {
     postStub = sinon.stub(request, 'post');
   });
 
-  afterEach(function(){
+  afterEach(function() {
     postStub.restore();
   });
 
@@ -99,7 +99,6 @@ describe('pack', function() {
             expect(err).to.be.null;
             expect(data.size).to.be.above(0);
             expect(data.name).not.to.be.null;
-            console.log(data.path);
             expect(data.path.indexOf('bin/')).to.not.equal(-1);
 
             fs.exists(data.path, function (exists) {
@@ -142,5 +141,64 @@ describe('pack', function() {
           expect(data.name.indexOf('MYAPP.4.2.')).to.equal(0);
           done();
         });
+  });
+});
+
+describe('create-release', function() {
+  var getStub;
+  beforeEach(function(){
+    getStub = sinon.stub(request, 'get');
+  });
+
+  afterEach(function() {
+    getStub.restore();
+  });
+
+  it('can create a release', function (done) {
+    getStub
+      .withArgs(sinon.match.has('url', 'http://localhost/api/projects/all'))
+      .yields(null, { statusCode: 200 }, [
+          {
+            Id: 'Projects-1',
+            Name: 'PROJECT.X',
+            Links: {
+              Channels: '/api/projects/Projects-1/channels',
+            }
+          },
+          {
+            Name: 'PROJECT.Y',
+            Links: {
+              Channels: '/api/projects/Projects-2/channels',
+            }
+          }
+        ]);
+
+    getStub
+      .withArgs(sinon.match.has('url', 'http://localhost/api/projects/Projects-1/channels'))
+      .yields(null, { statusCode: 200 }, {
+        Items: [
+          {
+            Id: 'Channels-1',
+            Name: 'Default',
+            ProjectId: 'Projects-1',
+          }
+        ]  
+      });
+
+    octo.createRelease({
+        project: 'PROJECT.X',
+        version: '1.0.0',
+        package: [
+            {
+                stepName: 'Deploy Frontend Assets',
+                version: '1.0.0'
+            }
+        ],
+        host: 'http://localhost'
+    }, function(err, data) {
+      expect(err).to.be.null;
+
+      done();
+    });
   });
 });

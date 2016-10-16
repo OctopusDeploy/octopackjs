@@ -90,6 +90,27 @@ octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
 });
 ```
 
+#### Create release
+```js
+var octo = require('@octopusdeploy/octopackjs');
+
+octo.createRelease('./bin/Sample.Web.3.2.1.tar.gz', {
+        host: 'http://octopus-server/', 
+        apikey: 'API-XXXXXXXXX',
+        projectid: 'project-xxx',
+        version: 'x.x.x',
+        channelid: 'Channels-xxx',
+        selectedPackages: [{
+            stepName: 'name of the step',
+            version: 'x.x.x'
+        }]
+    }, function(err, result) {
+     if(!err) {
+        console.log("Release created:" + body.Id + " v"+ body.Version); 
+     }
+});
+```
+
 ## Tests
 ```shell
     npm test
