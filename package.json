@@ -1,6 +1,6 @@
 {
   "name": "@octopusdeploy/octopackjs",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A nodejs tool for packaging and pushing projects to an Octopus Deploy instance.",
   "main": "index.js",
   "scripts": {
@@ -23,8 +23,8 @@
     "sinon": "^1.17.2"
   },
   "dependencies": {
-    "archiver": "^0.20.0",
-    "archiver-utils": "^0.3.0",
+    "archiver": "^1.0.0",
+    "archiver-utils": "^1.0.0",
     "request": "^2.67.0",
     "stream-to-buffer": "^0.1.0",
     "xml-writer": "^1.6.0",
