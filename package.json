@@ -16,7 +16,7 @@
     "octo"
   ],
   "author": "Octopus Deploy <support@octopus.com> (http://octopus.com/)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "devDependencies": {
     "chai": "^3.4.1",
     "mocha": "^2.3.4",
