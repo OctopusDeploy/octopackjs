@@ -100,7 +100,7 @@ describe('pack', function() {
             expect(data.size).to.be.above(0);
             expect(data.name).not.to.be.null;
             console.log(data.path);
-            expect(data.path.indexOf('bin/')).to.not.equal(-1);
+            expect(/tar\.gz/.test(data.path)).to.be.true;
 
             fs.exists(data.path, function (exists) {
                 expect(exists).to.be.true;
@@ -144,3 +144,89 @@ describe('pack', function() {
         });
   });
 });
+
+describe('deploy', function(){
+    
+    var postStub, getStub;
+
+    beforeEach(function(){
+        postStub = sinon.stub(request, 'post');
+        getStub = sinon.stub(request, 'get');
+    });
+
+    afterEach(function(){
+        postStub.restore();
+        getStub.restore();
+    });
+    
+    it('is exposed on the root object', function(){
+        expect(octo.deploy).not.to.be.null;
+    });
+    
+    it('throws for non existing host', function(){
+        expect(function(){ octo.deploy({}); }).to
+        .throw('Option "host" is undefined');
+    });
+    
+    it('throws for non existing projectName', function(){
+        expect(function(){ octo.deploy({host:''}); }).to
+        .throw('Option "projectName" is undefined');
+    });
+    
+    it('throws for non existing environmentName', function(){
+        octo.deploy({host:'', projectName: 'pname'});
+        var cb = getStub.getCall(0).args[1];
+        
+        expect(function(){
+            cb(null, [{Id:'projectId'}])
+        }).to.throw('Option "environmentName" is undefined');
+    });
+    
+    it('passes projectId to getRelease', function(){
+        // arrange
+        var allEnvs = [{ Name: 'test', Id: 'env1' }];
+        var expectedId = 'myPid';
+        
+        // act
+        octo.deploy({host:'', projectName: 'pname', environmentName: 'test'});
+        getStub.getCall(0).args[1](null, null, {Id: expectedId});
+        getStub.getCall(1).args[1](null, null, allEnvs);
+        
+        // assert
+        expect(getStub.getCall(2).args[0].url).to.contain(expectedId);
+    });
+    
+    it('uses first release in list if releaseVersion undefined', function(){
+        // arrange
+        var allEnvs = [{ Name: 'test', Id: 'env1' }];
+        var allReleases = { Items: [ {Version: '0.0.1', Id: '0'}, {Version: '0.0.5', Id: '1'} ] }
+        
+        // act
+        octo.deploy({host:'', projectName: 'pname', environmentName: 'test'});
+        getStub.getCall(0).args[1](null, null, {Id: 'id'});
+        getStub.getCall(1).args[1](null, null, allEnvs);
+        getStub.getCall(2).args[1](null, null, allReleases);
+        
+        // assert
+        var deployData = JSON.parse(postStub.getCall(0).args[0].form);
+        expect(deployData.EnvironmentID).to.equal(allEnvs[0].Id);
+    });
+    
+    it('passes release and environment to deploy', function(){
+        // arrange
+        var allEnvs = [{ Name: 'test', Id: 'env1' }];
+        var allReleases = { Items: [ {Version: '9.9.9', Id: 'version9'} ] }
+        
+        // act
+        octo.deploy({host:'', projectName: 'pname', environmentName: 'test', releaseVersion: '9.9.9'});
+        getStub.getCall(0).args[1](null, null, {Id: 'id'});
+        getStub.getCall(1).args[1](null, null, allEnvs);
+        getStub.getCall(2).args[1](null, null, allReleases);
+        
+        // assert
+        var deployData = JSON.parse(postStub.getCall(0).args[0].form);
+        expect(deployData.EnvironmentID).to.equal(allEnvs[0].Id);
+        expect(deployData.ReleaseID).to.equal(allReleases.Items[0].Id);
+    });
+    
+})
