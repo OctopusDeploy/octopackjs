@@ -32,7 +32,10 @@ Adds the `buff` Buffer instance to the package named using the provided `filePat
 Adds the `stream` Stream instance to the package named using the provided `filePath` parameter as a relative path from the root of the archive.
 
 #### package.append(filePath, file)
-Adds the `file` from disk to the package named using the provided `filePath` parameter as a relative path from the root of the archive. If the `filePath` parameter is missing, the provided path to the file on disk will be used as the filePath in the archive. If the filePath is a glob pattern, then the glob is used to append files to the package and the other arguments will be ignored.
+Adds the `file` from disk to the package named using the provided `filePath` parameter as a relative path from the root of the archive.
+If the `filePath` parameter is missing, the provided path to the file on disk will be used as the filePath in the archive.
+If the `filePath` is a glob pattern, then the glob is used to append files to the package and the other arguments will be ignored.
+Supplying a folder path without being a glob will be ignored.
 
 #### package.toStream(function callback(err, data){})
 Completes the packaging of the files and invokes the provided callback, returning an object containing the stream instance and name.
