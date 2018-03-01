@@ -108,6 +108,22 @@ describe('pack', function() {
         });
   });
 
+  it('can add files with glob', function (done) {
+      octo.pack()
+          .append('lib/*.js')
+          .toFile('./bin/', function (err, data) {
+              expect(err).to.be.null;
+              expect(data.size).to.be.above(0);
+              expect(data.name).not.to.be.null;
+              expect(data.path.indexOf('bin')).to.equal(0);
+
+              fs.exists(data.path, function (exists) {
+                  expect(exists).to.be.true;
+                  done();
+              });
+          });
+      });
+
   it('defaults to tar.gz', function (done) {
     octo.pack()
         .append('file.txt', new Buffer('hello world'))
