@@ -1,19 +1,28 @@
 {
   "name": "@octopusdeploy/octopackjs",
-  "version": "0.1.0",
+  "version": "0.2.0-cli",
   "description": "A nodejs tool for packaging and pushing projects to an Octopus Deploy instance.",
   "main": "index.js",
   "scripts": {
-    "test": "\"\"node_modules/.bin/mocha\"\" -R spec"
+    "test": "node node_modules/mocha/bin/mocha -R spec test.js"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/OctopusDeploy/octopackjs"
   },
+  "bin": {
+    "octopack": "./bin/octopack.js"
+  },
+  "engines": {
+    "node": ">=4"
+  },
   "keywords": [
     "octopus",
     "deploy",
-    "octo"
+    "octo",
+    "package",
+    "zip",
+    "archive"
   ],
   "author": "Octopus Deploy <support@octopus.com> (http://octopus.com/)",
   "license": "Apache-2.0",
@@ -26,7 +35,10 @@
     "archiver": "^2.1.1",
     "archiver-utils": "^1.0.0",
     "is-glob": "^4.0.0",
+    "jsonfile": "^4.0.0",
+    "merge": "^1.2.0",
     "request": "^2.67.0",
+    "semver": "^5.5.0",
     "stream-to-buffer": "^0.1.0",
     "xml-writer": "^1.6.0",
     "zip-stream": "^1.2.0"

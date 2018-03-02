@@ -3,7 +3,7 @@ node_modules
 npm-debug.log
 
 # Build artifacts
-bin
+dist
 
 # OS generated files
 .idea

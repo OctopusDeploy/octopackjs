@@ -1,0 +1,44 @@
+Usage: octopack [options] [dir]
+
+  Options:
+
+  Configuration:
+    --config <file>................... alternate octopack.json config file to
+                                         use (default ./octopack.json)
+    [dir] ............................ working directory
+
+  Packing:
+    --outDir ......................... created archive location (default cwd)
+    --bypass-disk .................... creates archive as in-memory stream. used
+                                       the archive will just be pushed
+    --dependencies {dev|prod|none} ... which node_module dependencies to include.
+                                       (default prod)
+    --format {zip|tar|targz} ......... what archive format to use (default targz)
+    --packageVersion ................. override the package version used for
+                                       name (default from package.json)
+    --packageId ...................... override the package Id used for name.
+                                       (default from package.json)
+
+  Pushing:
+    --package ........................ if provided then no packaging will take place
+                                       and this file will be pushed to Octopus
+    --apikey ......................... Octopus Deploy api key with access to
+                                       push packages
+    --url ............................ Octopus Deploy server url
+    --replace ........................ replace existing package on server if already exists
+
+  Information:
+    -v, --version .................... current octopack version
+    -h --help ........................ help details (this!)
+    -V, --verbose .................... enable verbose logging
+    -q, --quiet ...................... disable all logging
+
+  Examples:
+  $ octopack
+  $ octopack --outDir ./dist --format zip
+  $ octopack -V --dependencies none --bypass-disk --apikey API-DDD --url http://localhost:8065 --replace
+  $ octopack --packageversion 2.0.0 C:\Development\OtherApp
+
+
+
+  For more details see https://github.com/OctopusDeploy/octopackjs/

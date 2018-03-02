@@ -48,7 +48,7 @@ Completes the packaging of the files, saves it to disk at the provided directory
 #### file
 Package file that is to be pushed to server. This can be an instance of a Stream, Buffer or file path string.
 
-#### options.host
+#### options.url
 Required property that points to the Octopus Server instance the package should be pushed to.
 
 #### options.replace
