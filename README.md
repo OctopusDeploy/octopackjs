@@ -37,6 +37,9 @@ If the `filePath` parameter is missing, the provided path to the file on disk wi
 If the `filePath` is a glob pattern, then the glob is used to append files to the package and the other arguments will be ignored.
 Supplying a folder path without being a glob will be ignored.
 
+#### package.appendSubDir(dir, toRoot)
+Adds the sub-directory `dir` to the archive. Adds the contents of `dir` to the root of the archive if `toRoot` is true (defaults to false).
+
 #### package.toStream(function callback(err, data){})
 Completes the packaging of the files and invokes the provided callback, returning an object containing the stream instance and name.
 
@@ -73,6 +76,7 @@ octo.pack()
   .append('buffer files/hello.txt', new Buffer('hello world'), {date: new Date(2011, 11, 11)})
   .append('stream.txt', fs.createReadStream('./package.json'))
   .append('lib/myfile.js')
+  .appendSubDir('dist/', true)
   .toFile('./bin', function (err, data) {
     console.log("Package Saved: "+ data.name);
   });
