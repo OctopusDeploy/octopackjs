@@ -158,4 +158,37 @@ describe('pack', function() {
           done();
         });
   });
+
+  it('can add subdirectories', function (done) {
+    octo.pack({id: 'test-subdir'})
+        .appendSubDir('lib/')
+        .toFile('./bin/', function (err, data) {
+            expect(err).to.be.null;
+            expect(data.size).to.be.above(0);
+            expect(data.name).not.to.be.null;
+            expect(data.path.indexOf('bin')).to.equal(0);
+
+            fs.exists(data.path, function (exists) {
+                expect(exists).to.be.true;
+                done();
+            });
+        });
+  });
+
+  it('can add subdirectory content to root of archive', function (done) {
+    octo.pack({id: 'test-subdir-root'})
+        .appendSubDir('lib/', true)
+        .toFile('./bin/', function (err, data) {
+            expect(err).to.be.null;
+            expect(data.size).to.be.above(0);
+            expect(data.name).not.to.be.null;
+            expect(data.path.indexOf('bin')).to.equal(0);
+
+            fs.exists(data.path, function (exists) {
+                expect(exists).to.be.true;
+                done();
+            });
+        });
+  });
+
 });
