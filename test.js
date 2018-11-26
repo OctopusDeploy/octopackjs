@@ -18,7 +18,7 @@ describe('push', function() {
   });
 
   it('should pass pkg stream', function() {
-    octo.push(new Buffer('hello world'), {
+    octo.push(Buffer.from('hello world'), {
       apikey: 'KEY',
       host: 'http://localhost',
       name: 'package.tar'
