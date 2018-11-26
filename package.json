@@ -4,7 +4,9 @@
   "description": "A nodejs tool for packaging and pushing projects to an Octopus Deploy instance.",
   "main": "index.js",
   "scripts": {
-    "test": "\"\"node_modules/.bin/mocha\"\" -R spec"
+    "test": "\"\"node_modules/.bin/mocha\"\" -R spec",
+    "test-teamcity": "\"\"node_modules/.bin/mocha\"\" -R spec --reporter mocha-teamcity-reporter",
+    "version-teamcity": "node -e \"console.log('##teamcity[buildNumber \\''+ require('./package.json').version +'\\']')\""
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   "devDependencies": {
     "chai": "^4.1.0",
     "mocha": "^5.2.0",
+    "mocha-teamcity-reporter": "^2.5.1",
     "sinon": "^7.1.1"
   },
   "dependencies": {
