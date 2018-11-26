@@ -15,7 +15,8 @@
   "keywords": [
     "octopus",
     "deploy",
-    "octo"
+    "octo",
+    "package"
   ],
   "author": "Octopus Deploy <support@octopus.com> (http://octopus.com/)",
   "license": "Apache-2.0",
