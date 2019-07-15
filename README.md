@@ -91,7 +91,8 @@ octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
         console.log("Package Pushed:" + body.Title + " v"+ body.Version +" (" + fileSizeString(body.PackageSizeBytes) +"nytes)"); 
      }
 });
-
+```
+```js
 var octo = require('@octopusdeploy/octopackjs');
 
 octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
