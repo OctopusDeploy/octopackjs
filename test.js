@@ -37,6 +37,12 @@ describe('push', function() {
       expect(req.url).to.equal('http://myweb/api/packages/raw?replace=true');
     });
 
+    it('should include spaceid in url', function () {
+      octo.push(new Buffer('hello world'), {host: 'http://myweb', spaceId: 'Spaces-1', name: 'package.tar'});
+      var req = postStub.lastCall.args[0];
+      expect(req.url).to.equal('http://myweb/api/Spaces-1/packages/raw');
+    });
+
     it('should build correct url regardless of trailing slash', function () {
       testUrl('http://myweb', 'http://myweb/api/packages/raw');
       testUrl('http://myweb/', 'http://myweb/api/packages/raw');
