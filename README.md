@@ -92,6 +92,21 @@ octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
      }
 });
 ```
+```js
+var octo = require('@octopusdeploy/octopackjs');
+
+octo.push('./bin/Sample.Web.3.2.1.tar.gz', {
+        host: 'http://octopus-server/', 
+        apikey: 'API-XXXXXXXXX',
+        replace: true,
+        spaceId: 'Spaces-1'
+    }, function(err, result) {
+     if(!err) {
+        console.log("Package Pushed:" + body.Title + " v"+ body.Version +" (" + fileSizeString(body.PackageSizeBytes) +"nytes)"); 
+     }
+});
+
+```
 
 ## Tests
 ```shell
