@@ -70,7 +70,7 @@ Invoked when the HTTP request has completed. The `data` object contains the HTTP
 ```js
 var octo = require('@octopusdeploy/octopackjs');
 octo.pack()
-  .append('buffer files/hello.txt', new Buffer('hello world'), {date: new Date(2011, 11, 11)})
+  .append('buffer files/hello.txt', Buffer.from('hello world'), {date: new Date(2011, 11, 11)})
   .append('stream.txt', fs.createReadStream('./package.json'))
   .append('lib/myfile.js')
   .toFile('./bin', function (err, data) {
