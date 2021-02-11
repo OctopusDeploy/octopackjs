@@ -58,7 +58,7 @@ describe('push', function() {
 
     function testUrl(host, expected) {
       octo.push(Buffer.from('hello world'), { host: host, name: 'package.tar' });
-      var req = postStub.lastCall.args[0];
+      var req = postStub.firstCall.args[0];
       expect(req.url).to.equal(expected);
     }
   });
@@ -79,6 +79,21 @@ describe('push', function() {
 
     var callback = postStub.firstCall.args[1];
     callback(null, {statusCode: 200}, body);
+  });
+
+  describe('timeout', function () {
+    it('should include `timeout` parameter default if it is not provided', function () {
+      octo.push(Buffer.from('hello world'), { host: 'http://myweb/', name: 'package.tar' });
+      var req = postStub.lastCall.args[0];
+      expect(req.timeout).to.be.not.undefined;
+      expect(req.timeout).to.equal(60000);
+    });
+    it('should include `timeout` parameter if it provided', function () {
+      octo.push(Buffer.from('hello world'), { host: 'http://myweb/', name: 'package.tar', timeout: 120000 });
+      var req = postStub.lastCall.args[0];
+      expect(req.timeout).to.not.undefined;
+      expect(req.timeout).to.equal(120000);
+    });
   });
 });
 
