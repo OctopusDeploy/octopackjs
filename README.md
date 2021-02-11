@@ -58,11 +58,14 @@ Required property that points to the Octopus Server instance the package should 
 Flag to force overwrite of existing package if one already exists with the same ID and version.
 
 #### options.apiKey
-Key linked to account with `BuiltInFeedPush` permissions. 
+Key linked to account with `BuiltInFeedPush` permissions.
 If `options.replace` is set to true and a package with the same ID and version already exists then the `BuiltInFeedAdminister` permission is required.
 
 #### options.name
 If a Stream or Buffer object is provided in the `file` parameter, the package name needs is required to properly store and use in Octopus Deploy. If this value is not provided and a path has been provided in the `file` parameter then the name of the file itself will be used.
+
+#### options.timeout
+Optional property to set the timeout in milliseconds used for requests to the Octopus Server instance.  If not specified, the default is 60000.
 
 #### callback
 Invoked when the HTTP request has completed. The `data` object contains the HTTP response body that was returned as a result of a successful push.
